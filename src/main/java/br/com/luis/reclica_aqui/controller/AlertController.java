@@ -1,8 +1,8 @@
 package br.com.luis.reclica_aqui.controller;
 
 
-import br.com.luis.reclica_aqui.dto.AlertRequestDTO;
-import br.com.luis.reclica_aqui.dto.AlertResponseDTO;
+import br.com.luis.reclica_aqui.dto.alert.AlertRequestDTO;
+import br.com.luis.reclica_aqui.dto.alert.AlertResponseDTO;
 import br.com.luis.reclica_aqui.service.AlertService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

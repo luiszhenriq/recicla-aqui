@@ -1,7 +1,7 @@
 package br.com.luis.reclica_aqui.model;
 
 
-import br.com.luis.reclica_aqui.dto.AlertRequestDTO;
+import br.com.luis.reclica_aqui.dto.alert.AlertRequestDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

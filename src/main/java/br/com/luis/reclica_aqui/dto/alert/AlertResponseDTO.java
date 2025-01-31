@@ -1,4 +1,4 @@
-package br.com.luis.reclica_aqui.dto;
+package br.com.luis.reclica_aqui.dto.alert;
 
 import br.com.luis.reclica_aqui.model.Category;
 import br.com.luis.reclica_aqui.model.Status;

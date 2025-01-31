@@ -1,8 +1,8 @@
 package br.com.luis.reclica_aqui.service;
 
 
-import br.com.luis.reclica_aqui.dto.AlertRequestDTO;
-import br.com.luis.reclica_aqui.dto.AlertResponseDTO;
+import br.com.luis.reclica_aqui.dto.alert.AlertRequestDTO;
+import br.com.luis.reclica_aqui.dto.alert.AlertResponseDTO;
 import br.com.luis.reclica_aqui.model.Alert;
 import br.com.luis.reclica_aqui.model.User;
 import br.com.luis.reclica_aqui.repository.AlertRepository;
@@ -44,4 +44,6 @@ public class AlertService {
                 savedAlert.getCreationDate().format(formatter)
         );
     }
+
+
 }
