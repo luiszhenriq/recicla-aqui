@@ -1,6 +1,7 @@
 package br.com.luis.reclica_aqui.model;
 
 
+import br.com.luis.reclica_aqui.dto.AlertRequestDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,15 +13,19 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "alerts")
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class Alert {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     private Double latitude;
 
@@ -35,4 +40,12 @@ public class Alert {
     private String description;
 
     private LocalDateTime creationDate;
+
+    public Alert(AlertRequestDTO request) {
+        this.latitude = request.latitude();
+        this.longitude = request.longitude();
+        this.category = request.category();
+        this.description = request.description();
+        this.creationDate = LocalDateTime.now();
+    }
 }
