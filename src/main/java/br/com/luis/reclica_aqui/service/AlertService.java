@@ -8,10 +8,14 @@ import br.com.luis.reclica_aqui.model.User;
 import br.com.luis.reclica_aqui.repository.AlertRepository;
 import br.com.luis.reclica_aqui.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +47,30 @@ public class AlertService {
                 savedAlert.getDescription(),
                 savedAlert.getCreationDate().format(formatter)
         );
+    }
+
+    public List<AlertResponseDTO> getAlertsByUser() {
+
+        return repository.findAllByUser(getAuthenticatedUser())
+                .stream()
+                .map(alert -> new AlertResponseDTO(
+                        alert.getId(),
+                        alert.getLatitude(),
+                        alert.getLongitude(),
+                        alert.getCategory(),
+                        alert.getStatus(),
+                        alert.getDescription(),
+                        alert.getCreationDate().format(formatter)
+                ))
+                .collect(Collectors.toList());
+    }
+
+    private User getAuthenticatedUser() {
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        String email = userDetails.getUsername();
+        return this.userRepository.findUserByEmail(email);
     }
 
 
