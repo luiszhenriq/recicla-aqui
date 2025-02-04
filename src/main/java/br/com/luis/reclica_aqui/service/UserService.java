@@ -10,6 +10,8 @@ import br.com.luis.reclica_aqui.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -51,6 +53,20 @@ public class UserService {
         var auth = manager.authenticate(token);
 
         return tokenService.generateToken((User) auth.getPrincipal());
+    }
+
+    public UserResponseDTO profile() {
+
+        User user = repository.findUserByEmail(getAuthenticatedUser());
+
+        return userResponseDTO(user);
+    }
+
+    private String getAuthenticatedUser() {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        return authentication.getName();
     }
 
 
