@@ -4,6 +4,8 @@ package br.com.luis.reclica_aqui.service;
 import br.com.luis.reclica_aqui.dto.user.UserLoginDTO;
 import br.com.luis.reclica_aqui.dto.user.UserRegisterDTO;
 import br.com.luis.reclica_aqui.dto.user.UserResponseDTO;
+import br.com.luis.reclica_aqui.infra.exception.EmailAlreadyRegisteredException;
+import br.com.luis.reclica_aqui.infra.exception.InvalidPasswordException;
 import br.com.luis.reclica_aqui.infra.security.TokenService;
 import br.com.luis.reclica_aqui.model.User;
 import br.com.luis.reclica_aqui.repository.UserRepository;
@@ -27,7 +29,7 @@ public class UserService {
     public UserResponseDTO register(UserRegisterDTO userRegister) {
 
         if (this.repository.findByEmail(userRegister.email()) != null) {
-            throw new RuntimeException("Este email já está cadastrado");
+            throw new EmailAlreadyRegisteredException("Este email já está cadastrado");
         }
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(userRegister.password());
@@ -46,7 +48,7 @@ public class UserService {
         User user = (User) repository.findByEmail(userLogin.email());
 
         if (!this.passwordEncoder.matches(userLogin.password(), user.getPassword())) {
-            throw new RuntimeException("Senha inválida");
+            throw new InvalidPasswordException("Senha inválida");
         }
 
         var token = new UsernamePasswordAuthenticationToken(userLogin.email(), userLogin.password());

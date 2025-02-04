@@ -3,6 +3,7 @@ package br.com.luis.reclica_aqui.service;
 
 import br.com.luis.reclica_aqui.dto.alert.AlertRequestDTO;
 import br.com.luis.reclica_aqui.dto.alert.AlertResponseDTO;
+import br.com.luis.reclica_aqui.infra.exception.IdNotFoundException;
 import br.com.luis.reclica_aqui.model.Alert;
 import br.com.luis.reclica_aqui.model.User;
 import br.com.luis.reclica_aqui.repository.AlertRepository;
@@ -30,7 +31,7 @@ public class AlertService {
     @Transactional
     public AlertResponseDTO create(AlertRequestDTO alertRequest) {
 
-        User user = userRepository.findById(alertRequest.userId()).orElseThrow(() -> new RuntimeException("Usuário não foi encontrado"));
+        User user = userRepository.findById(alertRequest.userId()).orElseThrow(() -> new IdNotFoundException("Usuário não foi encontrado"));
 
         Alert newAlert = new Alert(alertRequest);
 

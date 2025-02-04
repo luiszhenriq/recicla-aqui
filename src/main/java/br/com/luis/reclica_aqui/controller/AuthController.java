@@ -5,6 +5,7 @@ import br.com.luis.reclica_aqui.dto.user.UserRegisterDTO;
 import br.com.luis.reclica_aqui.dto.user.UserResponseDTO;
 import br.com.luis.reclica_aqui.infra.security.TokenJWT;
 import br.com.luis.reclica_aqui.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +22,12 @@ public class AuthController {
     private final UserService service;
 
     @PostMapping("/register")
-    public ResponseEntity<UserResponseDTO> register(@RequestBody UserRegisterDTO register) {
+    public ResponseEntity<UserResponseDTO> register(@RequestBody @Valid UserRegisterDTO register) {
         return new ResponseEntity<>(service.register(register), HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<TokenJWT> login(@RequestBody UserLoginDTO login) {
+    public ResponseEntity<TokenJWT> login(@RequestBody @Valid UserLoginDTO login) {
         String tokenJWT = service.login(login);
         return ResponseEntity.ok(new TokenJWT(tokenJWT));
     }
